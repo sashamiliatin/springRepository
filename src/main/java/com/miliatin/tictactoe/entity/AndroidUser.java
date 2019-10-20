@@ -1,38 +1,33 @@
 package com.miliatin.tictactoe.entity;
 
-import org.springframework.data.annotation.Id;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+
 @Entity
 public class AndroidUser {
     @Id
-    @GeneratedValue
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    int id;
-    String user_id;
-    User user;
-    public AndroidUser(){}
+    private String androidId;
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "id", nullable = false)
+    private User user;
 
-    public AndroidUser(String user_id, User user) {
-        this.user_id = user_id;
+    public AndroidUser(String androidId, User user) {
+        this.androidId = androidId;
         this.user = user;
     }
 
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
-    public User getUser() {
-        return user;
+    public String getAndroidId() {
+        return androidId;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

@@ -1,35 +1,37 @@
 package com.miliatin.tictactoe.service;
+
 import com.miliatin.tictactoe.entity.AndroidUser;
 import com.miliatin.tictactoe.entity.User;
 import com.miliatin.tictactoe.repository.AndroidUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
+@Service
 public class UserService {
-    User users;
-    String user_id;
     private AndroidUserRepository repository;
-    private AndroidUser androidUser;
 
-public void CreateUser(String id , User user){
-    androidUser = new AndroidUser(id,user);
-    repository.save(androidUser);
-}
+    @Autowired
+    public UserService(AndroidUserRepository repository) {
+        this.repository = repository;
+    }
 
-public void UpdateUser(String id , User user){
-    androidUser = new AndroidUser(id,user);
-    repository.save(androidUser);
-}
+    public void createUser(String id , User user){
+        AndroidUser androidUser = new AndroidUser(id, user);
+        repository.save(androidUser);
+    }
 
-public void DeleteUser(String id){
+    public void updateUser(String id , User user){
+        AndroidUser androidUser = getUser(id);
+        androidUser.setUser(user);
+    }
 
-    repository.delete(GetUser(id));
-}
+    public void deleteUser(String id){
+        repository.delete(getUser(id));
+    }
 
-public AndroidUser GetUser(String id){
-    AndroidUser obj =  repository.findById(id).get();
-    return obj;
-}
-
+    public AndroidUser getUser(String id){
+        return repository
+                .findById(id)
+                .orElseThrow();
+    }
 }

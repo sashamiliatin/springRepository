@@ -1,29 +1,27 @@
 package com.miliatin.tictactoe.entity;
 
-import org.springframework.context.annotation.Primary;
-import org.springframework.data.annotation.Id;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
-@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue
-    int id;
-    @Column(name = "user_name")
-    String name;
-    @Column(name = "user_games")
-    Integer games;
-    @Column(name = "user_wins")
-    Integer wins;
+    private int id;
+    private String name;
+    private int games;
+    private int wins;
 
-    public User(String name, Integer games, Integer wins) {
-        this.name = name;
-        this.games = games;
-        this.wins = wins;
+    public User() {}
+
+    public int getId() {
+        return id;
     }
-    @OneToOne(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -33,19 +31,19 @@ public class User {
         this.name = name;
     }
 
-    public Integer getGames() {
+    public int getGames() {
         return games;
     }
 
-    public void setGames(Integer games) {
+    public void setGames(int games) {
         this.games = games;
     }
 
-    public Integer getWins() {
+    public int getWins() {
         return wins;
     }
 
-    public void setWins(Integer wins) {
+    public void setWins(int wins) {
         this.wins = wins;
     }
 }
